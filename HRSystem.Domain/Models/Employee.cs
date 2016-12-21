@@ -24,9 +24,9 @@ namespace HRSystem.Domain
         public virtual ICollection<Vacation> Vacations { get; set; }
         public int GrantedAnnualLeaveDays { get; set; }
 
-        public Vacation OpenVacationRequest(int requestedDays)
+        public void OpenVacationRequest(int requestedDays)
         {
-            return new Vacation(this, requestedDays);
+            this.Vacations.Add(new Vacation(requestedDays));
         }
     }
 }
