@@ -33,6 +33,7 @@ namespace HRSystem.Domain
 
         protected internal virtual Employee Employee { get; set; }
 
+        //ToDo: Is it Ok?
         public void Approve(VacationRepository vacationRepository, IPayrollSystem payrollClient, IUserProvider userInfo)
         {
             int sumOfPaidVacationDays = vacationRepository.GetApprovedVacationDays(this.EmployeeId);

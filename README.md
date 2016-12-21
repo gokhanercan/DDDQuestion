@@ -8,5 +8,5 @@ We assume
 
 I am trying to en-Rich Domain Model.
 
-I am not happy with Vacation models Approve method.
+I am not happy with Vacation model's Approve method.
 Can you help me ?
