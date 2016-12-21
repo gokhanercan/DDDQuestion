@@ -13,15 +13,14 @@ namespace HRSystem.Domain
     [Table("Vacation")]
     public partial class Vacation
     {
-        internal protected Vacation()
+        protected internal Vacation()
         {
 
         }
-        protected internal Vacation(Employee requestedEmployee, int requestedDays)
+        protected internal Vacation(int requestedDays)
         {
             this.Days = requestedDays;
             this.Status = RequestStatus.RequestOpened;
-            requestedEmployee.Vacations.Add(this);
         }
         public int Id { get; set; }
 
@@ -32,7 +31,7 @@ namespace HRSystem.Domain
         public RequestStatus Status { get; set; }
         public int ApprovedUserId { get; set; }
 
-        public virtual Employee Employee { get; set; }
+        protected internal virtual Employee Employee { get; set; }
 
         public void Approve(VacationRepository vacationRepository, IPayrollSystem payrollClient, IUserProvider userInfo)
         {
