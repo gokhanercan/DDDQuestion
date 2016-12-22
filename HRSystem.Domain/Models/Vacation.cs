@@ -17,24 +17,27 @@ namespace HRSystem.Domain
         {
 
         }
-        protected internal Vacation(int requestedDays)
+        internal static Vacation Create(Employee employee, int requestedDays)
         {
-            this.Days = requestedDays;
-            this.Status = RequestStatus.RequestOpened;
+            return new Vacation
+            {
+                Days = requestedDays,
+                Status = RequestStatus.RequestOpened,
+                Employee = employee,
+                AssignedManagerId = employee.ManagerId.Value
+            };
         }
-        public int Id { get; set; }
+        public int Id { get; private set; }
 
-        public int EmployeeId { get; set; }
+        public int EmployeeId { get; private set; }
+        public int AssignedManagerId { get; private set; }
+        public int Days { get; internal set; }
 
-        public int Days { get; set; }
-
-        public RequestStatus Status { get; set; }
-        public int ApprovedUserId { get; set; }
-
-        protected internal virtual Employee Employee { get; set; }
+        public RequestStatus Status { get; internal set; }
+        protected internal virtual Employee Employee { get; private set; }
 
         //ToDo: Is it Ok?
-        public void Approve(VacationRepository vacationRepository, IPayrollSystem payrollClient, IUserProvider userInfo)
+        public void Approve(VacationRepository vacationRepository, IPayrollSystem payrollClient)
         {
             int sumOfPaidVacationDays = vacationRepository.GetApprovedVacationDays(this.EmployeeId);
             if (sumOfPaidVacationDays + this.Days > this.Employee.GrantedAnnualLeaveDays)
@@ -43,7 +46,6 @@ namespace HRSystem.Domain
                 payrollClient.AddUnpaidVacation(unpaidVacationDays);
             }
             this.Status = RequestStatus.Approved;
-            this.ApprovedUserId = userInfo.CurrentUserId;
         }
     }
 }

@@ -11,10 +11,16 @@ namespace HRSystem.Domain.Repositories
     public class EmployeeRepository
     {
         public HumanResourcesDbContext db { get; set; }
-        public IUserProvider User { get; set; }
-        public Employee GetCurrentEmployee()
+        public Employee GetById(int employeeId)
         {
-            return db.Employees.Find(this.User.CurrentUserId);
+            return db.Employees.Find(employeeId);
         }
+        //ToDo: Is it Ok?
+
+        //public IUserProvider User { get; set; }
+        //public Employee GetCurrentEmployee()
+        //{
+        //    return db.Employees.Find(this.User.CurrentUserId);
+        //}
     }
 }

@@ -1,4 +1,5 @@
-﻿using HRSystem.Domain;
+﻿using FrameworkX.Common.Infrastructure;
+using HRSystem.Domain;
 using HRSystem.Domain.Datasource;
 using HRSystem.Domain.Models.Enums;
 using System;
@@ -13,9 +14,9 @@ namespace HRSystem.Domain.Repositories
     {
         public HumanResourcesDbContext db { get; set; }
 
-        public IEnumerable<Vacation> GetOpenRequests()
+        public IEnumerable<Vacation> GetOpenRequestsForUser(int userId)
         {
-            return db.Vacations.Where(vacation => vacation.Status == RequestStatus.RequestOpened);
+            return db.Vacations.Where(vacation => vacation.Status == RequestStatus.RequestOpened && vacation.AssignedManagerId == userId);
         }
         public Vacation GetById(int vacationId)
         {

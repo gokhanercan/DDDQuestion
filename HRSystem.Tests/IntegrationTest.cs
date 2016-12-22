@@ -58,12 +58,12 @@ namespace HRSystem.Tests
             var controller = container.Resolve<VacationController>();
 
             controller.OpenVacationRequest(requestedDays: 3);
+            SwitchToUser(this.DbInitializer.Manager);
             var openedRequest = controller.GetOpenRequests().First();
 
             Assert.AreEqual(openedRequest.EmployeeId, this.DbInitializer.EmployeeAliVeli.Id);
             Assert.AreEqual(openedRequest.Days, 3);
 
-            SwitchToUser(this.DbInitializer.Manager);
 
             controller.ApproveRequest(openedRequest.Id);
 

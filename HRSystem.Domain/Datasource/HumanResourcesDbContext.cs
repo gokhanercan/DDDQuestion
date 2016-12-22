@@ -19,8 +19,15 @@ namespace HRSystem.Domain.Datasource
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Employee>()
+               .HasMany(e => e.SubEmployees)
+               .WithOptional(e => e.Manager)
+               .HasForeignKey(e => e.ManagerId)
+               .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Employee>()
                 .HasMany(e => e.Vacations)
                 .WithRequired(e => e.Employee)
+                .HasForeignKey(e => e.EmployeeId)
                 .WillCascadeOnDelete(false);
         }
     }

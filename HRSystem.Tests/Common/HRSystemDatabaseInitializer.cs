@@ -16,12 +16,13 @@ namespace HRSystem.Tests.Common
         public Employee Manager { get; set; }
         protected override void Seed(HumanResourcesDbContext db)
         {
-            this.EmployeeAliVeli = new Employee { FullName = "Ali Veli", GrantedAnnualLeaveDays = 20 };
             this.Manager = new Employee { FullName = "Manager", GrantedAnnualLeaveDays = 20 };
 
+            this.EmployeeAliVeli = new Employee { FullName = "Ali Veli", GrantedAnnualLeaveDays = 20 };
             this.EmployeeAliVeli.Vacations.Add(new Vacation { Days = 19, Status = RequestStatus.Approved });
 
-            db.Employees.AddRange(new[] { this.EmployeeAliVeli, this.Manager });
+            this.Manager.SubEmployees.Add(this.EmployeeAliVeli);
+            db.Employees.Add(this.Manager);
             db.SaveChanges();
         }
     }
